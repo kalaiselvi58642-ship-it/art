@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ride Booking</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>🚗 Ride Booking</h1>
+
+    <!-- Form Card -->
+    <div class="card">
+        <h2>Book Ride</h2>
+
+        <form id="customerForm" action="/add" method="POST">
+            <div class="input-group">
+                <label>Name</label>
+                <input type="text"  id="name" name="name" placeholder="Enter your name" required>
+            </div>
+
+            <div class="input-group">
+                <label>Mobile</label>
+                <input type="text" id="mobile" name="mobile" placeholder="Enter mobile number" required>
+            </div>
+
+            <div class="input-group">
+                <label>Amount</label>
+                <input type="number" id="amount" name="amount" placeholder="Enter fare amount" required>
+            </div>
+
+            <div class="input-group">
+                <label>Location</label>
+                <input type="text" id="location" name="location" placeholder="Enter location" required>
+            </div>
+
+            <button type="submit">🚀 Book Ride</button>
+        </form>
+    </div>
+
+    <!-- Table Card -->
+    <div class="card">
+        <h2>Ride Details</h2>
+
+<table>
+            <tr>
+                <th>Name</th>
+                <th>Mobile</th>
+                <th>Amount</th>
+                <th>Location</th>
+                <th>Update</th>
+                <th>Action</th>
+               
+            </tr>
+            {% for row in customer %}
+<tr>
+    <td>{{ row[0] }}</td>
+    <td>{{ row[1] }}</td>
+    <td>{{ row[2] }}</td>
+    <td>{{ row[3] }}</td>
+    <td>
+        <button onclick="editData('{{ row[0] }}', '{{ row[1] }}', '{{ row[2] }}', '{{ row[3] }}')">Edit</button>
+    </td>
+    <td>
+        <!-- DELETE FORM (separate) -->
+        <form action="/delete" method="POST" style="display:inline;">   
+            <input type="hidden" name="name" value="{{ row[0] }}">
+            <input type="hidden" name="mobile" value="{{ row[1] }}">
+            <input type="hidden" name="amount" value="{{ row[2] }}">
+            <input type="hidden" name="location" value="{{ row[3] }}">
+            <button type="submit">Delete</button>   
+        </form>
+    </td>   
+</tr>
+
+{% endfor %}
+</table>
+<script>
+
+function editData(name,mobile,amount,location){
+
+document.getElementById("name").value = name;
+document.getElementById("mobile").value = mobile;
+document.getElementById("amount").value = amount;
+document.getElementById("location").value = location;
+document.getElementById("customerForm").action="/update";
+document.getElementById("submitBtn").innerHTML="Update Book Ride";
+
+}
+
+</script>
+
+
+    </div>
+
+</div>
+<right>
+<p>    KALAI SELVI</p>
+</right>
+</body>
+</html>
